@@ -1,6 +1,7 @@
 import { db } from "@/lib/db/db";
 import { warehouses } from "@/lib/db/schema";
 import { warehouseSchema } from "@/lib/validators/warehouseSchema";
+import { desc } from "drizzle-orm";
 
 export async function POST(request: Request) {
   // todo: chech auth
@@ -20,6 +21,22 @@ export async function POST(request: Request) {
   } catch (error) {
     return Response.json(
       { message: "Failed to store the warehouse" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    const allWarehouses = await db
+      .select()
+      .from(warehouses)
+      .orderBy(desc(warehouses.id));
+
+    return Response.json(allWarehouses);
+  } catch (error) {
+    return Response.json(
+      { message: "Failed to fetch all warehouses" },
       { status: 500 }
     );
   }
