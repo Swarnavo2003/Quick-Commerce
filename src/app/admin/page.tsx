@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button";
+
 function AdminPage() {
-  return <div>AdminPage</div>;
+  return <Button>Click Me</Button>;
 }
 export default AdminPage;
